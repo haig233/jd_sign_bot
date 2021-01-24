@@ -76,7 +76,7 @@ async function start() {
       single = t[0].split("  ")[1]
       single = "签到" + single
     }
-    let t2 = content.match(/【账号总计】:.*/)
+    let t2 = content.match(/【账号总计】:.*京豆/)
     total = t2[0].split("  ")[1]
     if (total !== "获取失败") total = "总计" + total
     await sendNotify(`${single}___${total}`, content);
