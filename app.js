@@ -63,24 +63,41 @@ async function start() {
     if (fs.existsSync(path)) {
       content = fs.readFileSync(path, "utf8");
     }
-    let single, total
-    let t = content.match(/【签到奖励】:.*/)
-    if (t) {
-      single = t[0].split("  ")[1]
-      if (single !== "获取失败")
-        single = "获得" + single
+    let thisTime, jingdou
+    let reward = content.match(/【签到奖励】:.*/g)
+    if (reward) {
+      // 签到奖励匹配成功时,显示获得京豆数
+
+      //移除标题文本/空格,从文本中分割出京豆,将钢镚丢弃
+      thisTime = reward[0].split(":")[1]
+        .replace(" ", "")
+        .split("京豆")[0]
+      if (thisTime !== "获取失败")
+        thisTime = "获得" + thisTime + "京豆"
       else
-        single = "签到奖励" + single
+        thisTime = "签到奖励获取失败"
     } else {
-      let t = content.match(/【签到概览】:.*/)
-      single = t[0].split("  ")[1]
-      single = "签到" + single
+      // 签到奖励匹配失败时,显示成功/失败数
+      let overview = content.match(/【签到概览】:.*/g)[0]
+      //移除标题文本/空格
+      thisTime = overview
+        .replace(/\s+/g,"")
+        .replace(",", "")
+        .split(":")[1]
+      thisTime = "签到" + thisTime
     }
-    let t2 = content.match(/【账号总计】:.*京豆/)
-    total = t2[0].split("  ")[1]
-    if (total !== "获取失败") total = "总计" + total
-    await sendNotify(`${single}___${total}`, content);
-    console.log(`${single}___${total}`)
+    // 账号总计
+    let total = content.match(/【账号总计】:.*/g)[0]
+    //移除标题文本
+    jingdou = total
+      .replace(/\s+/g,"")
+      .split(":")[1]
+    if (jingdou !== "获取失败")
+      jingdou = "总计" + jingdou.split("京豆")[0] + "京豆"
+    else
+      jingdou = "京豆数获取失败"
+    await sendNotify(`${thisTime}___${jingdou}`, content);
+    console.log(`${thisTime}___${jingdou}`)
   }
 }
 
