@@ -1,6 +1,7 @@
 name: Github JD-sign bot
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - master
