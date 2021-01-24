@@ -80,6 +80,7 @@ async function start() {
     total = t2[0].split("  ")[1]
     if (total !== "获取失败") total = "总计" + total
     await sendNotify(`${single}___${total}`, content);
+    console.log(`${single}___${total}`)
   }
 }
 
