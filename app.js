@@ -13,31 +13,31 @@ const serverJ = process.env.PUSH_KEY;
 const DualKey = process.env.JD_COOKIE_2;
 
 
-async function downFile () {
-    const url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js'
-    // const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
-    await download(url, './');
+async function downFile() {
+  const url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js'
+  // const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
+  await download(url, './');
 }
 
-async function changeFile () {
-   let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
-   content = content.replace(/var Key = ''/, `var Key = '${KEY}'`);
-   if (DualKey) {
+async function changeFile() {
+  let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
+  content = content.replace(/var Key = ''/, `var Key = '${KEY}'`);
+  if (DualKey) {
     content = content.replace(/var DualKey = ''/, `var DualKey = '${DualKey}'`);
-   }
-   await fs.writeFileSync( './JD_DailyBonus.js', content, 'utf8')
+  }
+  await fs.writeFileSync('./JD_DailyBonus.js', content, 'utf8')
 }
 
-async function sendNotify (text,desp) {
-  const options ={
-    uri:  `https://sc.ftqq.com/${serverJ}.send`,
-    form: { text, desp },
+async function sendNotify(text, desp) {
+  const options = {
+    uri: `https://sc.ftqq.com/${serverJ}.send`,
+    form: {text, desp},
     json: true,
     method: 'POST'
   }
-  await rp.post(options).then(res=>{
+  await rp.post(options).then(res => {
     console.log(res)
-  }).catch((err)=>{
+  }).catch((err) => {
     console.log(err)
   })
 }
