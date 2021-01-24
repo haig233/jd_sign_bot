@@ -1,8 +1,9 @@
+.idea/
 
 # OSX
 .DS_Store
 
-  
+
 # Logs
 logs
 *.log
@@ -16,3 +17,5 @@ package-lock.json
 
 JD_DailyBonus.js
 result.txt
+CookieSet.json
+yarn.lock
