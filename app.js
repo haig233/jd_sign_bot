@@ -63,16 +63,22 @@ async function start() {
     if (fs.existsSync(path)) {
       content = fs.readFileSync(path, "utf8");
     }
-	let single, total
-    let t = content.match(/【签到奖励】:.*/)[0]
-	single = t.split("  ")[1]
-	if (single !== "获取失败")
-		single = "获得" + single
-	else
-		single = "签到奖励" + single
-    let t2 = content.match(/【账号总计】:.*/)[0]
-	total = t2.split("  ")[1]
-	if (total !== "获取失败") total = "总计" + total
+    let single, total
+    let t = content.match(/【签到奖励】:.*/)
+    if (t) {
+      single = t[0].split("  ")[1]
+      if (single !== "获取失败")
+        single = "获得" + single
+      else
+        single = "签到奖励" + single
+    } else {
+      let t = content.match(/【签到概览】:.*/)
+      single = t[0].split("  ")[1]
+      single = "签到" + single
+    }
+    let t2 = content.match(/【账号总计】:.*/)
+    total = t2[0].split("  ")[1]
+    if (total !== "获取失败") total = "总计" + total
     await sendNotify(`${single}___${total}`, content);
   }
 }
