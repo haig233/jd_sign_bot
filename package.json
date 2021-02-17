@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/ruicky/jd_sign_bot#readme",
   "dependencies": {
-    "download": "^8.0.0",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "axios": "^0.21.1",
+    "qs": "^6.9.6",
+    "request": "^2.88.2"
   }
 }
