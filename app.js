@@ -70,7 +70,7 @@ async function start() {
     let first = lines.findIndex(v => v.includes("【签到号一】"))
     let second = lines.findIndex(v => v.includes("【签到号二】"))
     const findLine = (key, start) => lines.slice(start, start + 10).find(v => v.includes(key))
-    if(first === -1){
+    if (first === -1) {
       notify = "号一失败"
       console.log(notify)
       await sendNotify(notify.split(' ').join('_'), lines.join(EOL.repeat(2)))
@@ -78,12 +78,12 @@ async function start() {
     }
     if (lines[first + 2].includes("【账号总计】")) {
       // failed
-      const totalCount = parseInt(lines[first + 2].match(/【账号总计】:  ([0-9]*)京豆/)[1])
+      const totalCount = parseInt(lines[first + 2].match(/【账号总计】:  ([0-9]*)京豆/)?.[1])
       notify += `号一失败 共${totalCount}`
     } else {
       // succeed
-      const totalCount = parseInt(findLine("账号总计", first).match(/【账号总计】:  ([0-9]*)京豆/)[1])
-      const got = parseInt(findLine("签到奖励", first).match(/【签到奖励】:  ([0-9]*)京豆/)[1])
+      const totalCount = parseInt(findLine("账号总计", first).match(/【账号总计】:  ([0-9]*)京豆/)?.[1])
+      const got = parseInt(findLine("签到奖励", first).match(/【签到奖励】:  ([0-9]*)京豆/)?.[1])
       notify += `号一成功 得${got}共${totalCount}`
     }
     if (second && DualKey) {
@@ -91,12 +91,12 @@ async function start() {
 
       if (lines[second + 2].includes("【账号总计】")) {
         // failed
-        const secondTotalCount = parseInt(lines[second + 2].match(/【账号总计】:  ([0-9]*)京豆/)[1])
+        const secondTotalCount = parseInt(lines[second + 2].match(/【账号总计】:  ([0-9]*)京豆/)?.[1])
         notify += `号二失败 共${secondTotalCount}`
       } else {
         // succeed
-        const secondTotalCount = parseInt(findLine("账号总计", second).match(/【账号总计】:  ([0-9]*)京豆/)[1])
-        const got = parseInt(findLine("签到奖励", second).match(/【签到奖励】:  ([0-9]*)京豆/)[1])
+        const secondTotalCount = parseInt(findLine("账号总计", second).match(/【账号总计】:  ([0-9]*)京豆/)?.[1])
+        const got = parseInt(findLine("签到奖励", second).match(/【签到奖励】:  ([0-9]*)京豆/)?.[1])
         notify += `号二成功 得${got}共${secondTotalCount}`
       }
     }
